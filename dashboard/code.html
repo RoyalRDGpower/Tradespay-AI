@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TradesPay AI Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed-variant": "#832700",
+                        "primary": "#ffb59d",
+                        "tertiary-fixed-dim": "#93ccff",
+                        "on-background": "#e5e2e1",
+                        "surface-container-high": "#2a2a2a",
+                        "primary-fixed": "#ffdbd0",
+                        "on-secondary-container": "#ffa587",
+                        "on-primary": "#5d1900",
+                        "on-tertiary": "#003351",
+                        "on-error": "#690005",
+                        "secondary-container": "#843111",
+                        "background": "#131313",
+                        "error-container": "#93000a",
+                        "surface-bright": "#3a3939",
+                        "inverse-on-surface": "#313030",
+                        "primary-container": "#ff5c1a",
+                        "on-surface-variant": "#e4beb3",
+                        "surface-container-lowest": "#0e0e0e",
+                        "outline": "#ab897f",
+                        "surface": "#131313",
+                        "surface-tint": "#ffb59d",
+                        "surface-container-highest": "#353534",
+                        "on-secondary": "#5d1900",
+                        "on-secondary-fixed-variant": "#7d2c0d",
+                        "on-error-container": "#ffdad6",
+                        "inverse-primary": "#ab3500",
+                        "surface-variant": "#353534",
+                        "on-tertiary-fixed": "#001d31",
+                        "tertiary-fixed": "#cde5ff",
+                        "surface-dim": "#131313",
+                        "tertiary-container": "#009ae8",
+                        "error": "#ffb4ab",
+                        "surface-container": "#201f1f",
+                        "inverse-surface": "#e5e2e1",
+                        "primary-fixed-dim": "#ffb59d",
+                        "on-tertiary-fixed-variant": "#004b74",
+                        "surface-container-low": "#1c1b1b",
+                        "on-tertiary-container": "#002e4a",
+                        "secondary-fixed-dim": "#ffb59d",
+                        "on-surface": "#e5e2e1",
+                        "on-primary-fixed": "#390c00",
+                        "secondary-fixed": "#ffdbd0",
+                        "secondary": "#ffb59d",
+                        "on-primary-container": "#541600",
+                        "outline-variant": "#5b4138",
+                        "tertiary": "#93ccff",
+                        "on-secondary-fixed": "#390c00"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body {
+            background-color: #080808;
+            color: #e5e2e1;
+            font-family: 'Inter', sans-serif;
+        }
+        .kinetic-glow {
+            box-shadow: 0 0 15px rgba(255, 92, 26, 0.15);
+        }
+        .neon-accent-left {
+            border-left: 2px solid #ff5c1a;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface-dim pb-24">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-[#080808]/80 backdrop-blur-xl shadow-[0_0_15px_rgba(255,92,26,0.1)] flex items-center justify-between px-6 h-16 max-w-full mx-auto">
+<div class="flex items-center gap-3">
+<img alt="TradesPay AI Logo" class="h-8 w-auto" data-alt="Minimalist abstract high-tech logo with geometric shapes and a vibrant orange pulse core on a dark background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDaZPu2zQb94oUuAZ38k8xXObU5AGJzHy6A8skKeQqdZqqZr_-NXmF32r9sKKwolqh08yc6y0HCr3noggtifjxz7c1QWabZTXOI_KEteGTOW7VXnaNlKXdL8Aw2jVPyaUi1rWx1lAOUGg47eUgUSBf_86TNfo541I3yTehgo1yrjeUypEEmTUuafeo4kkUkkwmIk_rqjXv3Ykqf54p6IFAqZ2yX26PFwLsft8xkc3VH_CD1Cye65xwVUCN9Suh9XwBvNWanVzKjoKY"/>
+<h1 class="font-['Space_Grotesk'] uppercase tracking-tighter text-xl font-bold text-[#ff5c1a]">TRADESPAY AI</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-[#e4beb3] hover:bg-[#353534] transition-colors duration-150 p-2 rounded-lg">notifications</button>
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-container-highest">
+<img alt="User Profile" data-alt="Close-up portrait of a professional tradesperson looking confident against a dark industrial background, cinematic lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_F6rmYbTsNxyIGBGCcEbCnIUx9YEIHhTIUEoVdgx6yxGq2n0XHzkJ_Eg0cYZP0H_t9DD_nwG-uhvvdxmVTzadCay62_sOLBW-m80WtaMXnEMW7x28oBHVECLzOOIqo_6ixPL8KZdG4fxE23IFGut6nutcxsxD_eVm1MX_e9GehDrYwziJyIdGooWXnuc6CHVUXFBKROPD9CytINaZqOsTuDzoNPB_H3hko0yNx20QaJx1d0K95aKLZ2XcALD5PHtjAZfrBf2Qdtg"/>
+</div>
+</div>
+</header>
+<main class="pt-20 px-4 max-w-lg mx-auto">
+<!-- Hero Section: Financial Overview -->
+<section class="mt-4 mb-8">
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-surface-container-low p-5 rounded-lg border-l-2 border-[#ff5c1a]/30">
+<p class="font-['Inter'] text-[10px] uppercase font-bold tracking-widest text-on-surface-variant mb-1">Total Invoiced</p>
+<p class="font-['Space_Grotesk'] text-2xl font-bold text-on-surface tracking-tighter">₦3.4M</p>
+</div>
+<div class="bg-surface-container-low p-5 rounded-lg border-l-2 border-tertiary-container/30">
+<p class="font-['Inter'] text-[10px] uppercase font-bold tracking-widest text-on-surface-variant mb-1">Collected</p>
+<p class="font-['Space_Grotesk'] text-2xl font-bold text-tertiary-container tracking-tighter">₦2.1M</p>
+</div>
+</div>
+</section>
+<!-- Quick Actions Grid -->
+<section class="mb-10">
+<h2 class="font-['Space_Grotesk'] text-[11px] uppercase font-extrabold tracking-[0.2em] text-[#ff5c1a] mb-4">Create Invoice</h2>
+<div class="grid grid-cols-3 gap-3">
+<button class="bg-primary-container text-on-primary font-bold py-6 rounded-lg flex flex-col items-center gap-2 active:scale-95 transition-transform shadow-[0_0_15px_rgba(255,92,26,0.25)]">
+<span class="material-symbols-outlined text-2xl" data-weight="fill" style="font-variation-settings: 'FILL' 1;">mic</span>
+<span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-wider">Voice</span>
+</button>
+<button class="bg-surface-container-highest text-on-surface-variant font-bold py-6 rounded-lg flex flex-col items-center gap-2 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-2xl">photo_camera</span>
+<span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-wider">Photo</span>
+</button>
+<button class="bg-surface-container-highest text-on-surface-variant font-bold py-6 rounded-lg flex flex-col items-center gap-2 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-2xl">edit_note</span>
+<span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-wider">Manual</span>
+</button>
+</div>
+</section>
+<!-- Recent Activity List -->
+<section class="mb-12">
+<div class="flex justify-between items-end mb-5">
+<h2 class="font-['Space_Grotesk'] text-[11px] uppercase font-extrabold tracking-[0.2em] text-[#ff5c1a]">Recent Invoices</h2>
+<button class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant/60 hover:text-primary transition-colors">View All</button>
+</div>
+<div class="space-y-3">
+<!-- Invoice 1 -->
+<div class="bg-surface-container-low px-5 py-4 flex items-center justify-between rounded-lg hover:bg-surface-container-high transition-colors">
+<div class="flex flex-col">
+<span class="font-['Space_Grotesk'] font-bold text-on-surface text-sm">Okonjo-Iweala Civil Works</span>
+<span class="font-['Inter'] text-[10px] text-on-surface-variant font-medium">Inv #0921 • 14 Oct</span>
+</div>
+<div class="flex flex-col items-end gap-2">
+<span class="font-['Space_Grotesk'] font-bold text-on-surface">₦420,000</span>
+<span class="text-[8px] font-black uppercase tracking-widest px-2 py-0.5 rounded-sm bg-tertiary-container/10 text-tertiary-container border border-tertiary-container/20">PAID</span>
+</div>
+</div>
+<!-- Invoice 2 -->
+<div class="bg-surface-container-low px-5 py-4 flex items-center justify-between rounded-lg hover:bg-surface-container-high transition-colors">
+<div class="flex flex-col">
+<span class="font-['Space_Grotesk'] font-bold text-on-surface text-sm">Lagos Port Authorities</span>
+<span class="font-['Inter'] text-[10px] text-on-surface-variant font-medium">Inv #0918 • 12 Oct</span>
+</div>
+<div class="flex flex-col items-end gap-2">
+<span class="font-['Space_Grotesk'] font-bold text-on-surface">₦1,250,000</span>
+<span class="text-[8px] font-black uppercase tracking-widest px-2 py-0.5 rounded-sm bg-error-container/20 text-error border border-error-container/40">OVERDUE</span>
+</div>
+</div>
+<!-- Invoice 3 -->
+<div class="bg-surface-container-low px-5 py-4 flex items-center justify-between rounded-lg hover:bg-surface-container-high transition-colors">
+<div class="flex flex-col">
+<span class="font-['Space_Grotesk'] font-bold text-on-surface text-sm">Damilola Adegbite</span>
+<span class="font-['Inter'] text-[10px] text-on-surface-variant font-medium">Inv #0915 • 10 Oct</span>
+</div>
+<div class="flex flex-col items-end gap-2">
+<span class="font-['Space_Grotesk'] font-bold text-on-surface">₦85,000</span>
+<span class="text-[8px] font-black uppercase tracking-widest px-2 py-0.5 rounded-sm bg-surface-container-highest text-on-surface-variant border border-outline-variant/30">SENT</span>
+</div>
+</div>
+</div>
+</section>
+<!-- AI Insight Banner -->
+<section class="bg-gradient-to-br from-[#1c1b1b] to-[#0e0e0e] p-6 rounded-lg border-l-4 border-primary shadow-xl">
+<div class="flex items-start gap-4">
+<div class="bg-primary/20 p-2 rounded-lg">
+<span class="material-symbols-outlined text-primary" data-weight="fill" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+</div>
+<div>
+<h3 class="font-['Space_Grotesk'] text-xs font-bold text-primary uppercase tracking-widest mb-1">AI Recommendation</h3>
+<p class="text-xs text-on-surface-variant leading-relaxed">3 invoices are nearing late status. Use the AI Autopilot to send a polite follow-up nudge to your clients now.</p>
+<button class="mt-4 text-[10px] font-black uppercase tracking-[0.2em] text-primary hover:underline">Activate Pulse Nudge</button>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 px-4 pb-safe bg-[#080808]/90 backdrop-blur-md border-t border-[#ff5c1a]/10 shadow-[0_-4px_20px_rgba(0,0,0,0.5)] rounded-t-sm">
+<a class="flex flex-col items-center justify-center text-[#ff5c1a] drop-shadow-[0_0_8px_rgba(255,92,26,0.4)] active:scale-90 transition-all duration-150 ease-out" href="#">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-['Space_Grotesk'] text-[10px] uppercase font-bold tracking-widest mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#e4beb3] opacity-60 hover:text-[#ff5c1a] transition-all active:scale-90 transition-all duration-150 ease-out" href="#">
+<span class="material-symbols-outlined text-2xl">receipt_long</span>
+<span class="font-['Space_Grotesk'] text-[10px] uppercase font-bold tracking-widest mt-1">Invoices</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#e4beb3] opacity-60 hover:text-[#ff5c1a] transition-all active:scale-90 transition-all duration-150 ease-out" href="#">
+<span class="material-symbols-outlined text-2xl">smart_toy</span>
+<span class="font-['Space_Grotesk'] text-[10px] uppercase font-bold tracking-widest mt-1">Auto-Pilot</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#e4beb3] opacity-60 hover:text-[#ff5c1a] transition-all active:scale-90 transition-all duration-150 ease-out" href="#">
+<span class="material-symbols-outlined text-2xl">person</span>
+<span class="font-['Space_Grotesk'] text-[10px] uppercase font-bold tracking-widest mt-1">Profile</span>
+</a>
+</nav>
+</body></html>

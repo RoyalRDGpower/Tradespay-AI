@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed-variant": "#832700",
+                        "primary": "#ffb59d",
+                        "tertiary-fixed-dim": "#93ccff",
+                        "on-background": "#e5e2e1",
+                        "surface-container-high": "#2a2a2a",
+                        "primary-fixed": "#ffdbd0",
+                        "on-secondary-container": "#ffa587",
+                        "on-primary": "#5d1900",
+                        "on-tertiary": "#003351",
+                        "on-error": "#690005",
+                        "secondary-container": "#843111",
+                        "background": "#131313",
+                        "error-container": "#93000a",
+                        "surface-bright": "#3a3939",
+                        "inverse-on-surface": "#313030",
+                        "primary-container": "#ff5c1a",
+                        "on-surface-variant": "#e4beb3",
+                        "surface-container-lowest": "#0e0e0e",
+                        "outline": "#ab897f",
+                        "surface": "#131313",
+                        "surface-tint": "#ffb59d",
+                        "surface-container-highest": "#353534",
+                        "on-secondary": "#5d1900",
+                        "on-secondary-fixed-variant": "#7d2c0d",
+                        "on-error-container": "#ffdad6",
+                        "inverse-primary": "#ab3500",
+                        "surface-variant": "#353534",
+                        "on-tertiary-fixed": "#001d31",
+                        "tertiary-fixed": "#cde5ff",
+                        "surface-dim": "#131313",
+                        "tertiary-container": "#009ae8",
+                        "error": "#ffb4ab",
+                        "surface-container": "#201f1f",
+                        "inverse-surface": "#e5e2e1",
+                        "primary-fixed-dim": "#ffb59d",
+                        "on-tertiary-fixed-variant": "#004b74",
+                        "surface-container-low": "#1c1b1b",
+                        "on-tertiary-container": "#002e4a",
+                        "secondary-fixed-dim": "#ffb59d",
+                        "on-surface": "#e5e2e1",
+                        "on-primary-fixed": "#390c00",
+                        "secondary-fixed": "#ffdbd0",
+                        "secondary": "#ffb59d",
+                        "on-primary-container": "#541600",
+                        "outline-variant": "#5b4138",
+                        "tertiary": "#93ccff",
+                        "on-secondary-fixed": "#390c00"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #080808; }
+        .font-headline { font-family: 'Space Grotesk', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .ai-glow { box-shadow: 0 0 15px rgba(255, 92, 26, 0.15); }
+        .primary-glow { box-shadow: 0 0 20px rgba(255, 92, 26, 0.3); }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="text-on-surface antialiased pb-24">
+<!-- TopAppBar -->
+<header class="bg-[#080808]/80 backdrop-blur-xl fixed top-0 w-full z-50 shadow-[0_0_15px_rgba(255,92,26,0.1)]">
+<div class="flex items-center justify-between px-6 h-16 w-full max-w-full mx-auto">
+<div class="flex items-center gap-3">
+<button class="active:scale-95 transition-transform p-2 -ml-2">
+<span class="material-symbols-outlined text-[#e4beb3]">arrow_back</span>
+</button>
+<h1 class="text-xl font-bold tracking-tighter text-[#ff5c1a] font-['Space_Grotesk'] uppercase">TRADESPAY AI</h1>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[#ff5c1a]">notifications</span>
+<div class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center overflow-hidden border border-[#ff5c1a]/20">
+<img alt="User Profile" data-alt="close-up portrait of a professional tradesperson in a dark environment with orange rim lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6tQQnlzfU9NSops088UZjxoGHy1u9za59H3kjl_HODDTiuDG_0uuh_MXMU7VTHdSWMFgtiox72GBUkExxfT1940Hk8qEq7MLs-BASlkDYG70QsuxVcEHf66I280o7h8eXs5fZ05JdjVgcn-YVKJLHFTigv6fcQjjIY-lKohkb0zS-q7SjCyICxcYSijn11gemFGZ-SHy4ohxKf8EQS_DBd7bE43xcaFD3vGyEXcdZ8Kj2SiOswUEkCmpmPeg5cvBv6uLb9cyca1E"/>
+</div>
+</div>
+</div>
+</header>
+<main class="mt-20 px-6 max-w-2xl mx-auto space-y-8">
+<!-- Status Header -->
+<section class="flex justify-between items-end">
+<div>
+<p class="text-[10px] uppercase tracking-[0.2em] text-on-surface-variant font-bold mb-1">Processing Complete</p>
+<h2 class="text-3xl font-headline font-bold tracking-tight text-on-surface">Invoice Analysis</h2>
+</div>
+<div class="flex flex-col items-end">
+<div class="relative w-16 h-16 flex items-center justify-center">
+<svg class="w-full h-full transform -rotate-90">
+<circle class="text-surface-container-highest" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-width="4"></circle>
+<circle class="drop-shadow-[0_0_8px_rgba(255,92,26,0.4)]" cx="32" cy="32" fill="transparent" r="28" stroke="#ff5c1a" stroke-dasharray="175.9" stroke-dashoffset="10.5" stroke-width="4"></circle>
+</svg>
+<span class="absolute text-xs font-bold font-headline">94%</span>
+</div>
+<p class="text-[10px] uppercase tracking-widest text-[#ff5c1a] mt-1 font-bold">AI CONFIDENCE</p>
+</div>
+</section>
+<!-- Main Analysis Card -->
+<section class="bg-surface-container-low rounded-lg p-6 ai-glow relative overflow-hidden border-l-2 border-[#ff5c1a]">
+<div class="flex justify-between items-start mb-8">
+<div>
+<h3 class="font-headline text-lg font-bold text-on-surface mb-1">Detected Merchant</h3>
+<p class="text-on-surface-variant text-sm font-medium">Lagos Electrics &amp; Maintenance Ltd.</p>
+</div>
+<div class="bg-surface-container-highest px-3 py-1 rounded-sm text-[10px] font-bold text-[#ff5c1a] uppercase tracking-tighter">
+                    Verified Entity
+                </div>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-center pb-4 border-b border-outline-variant/10">
+<span class="text-xs uppercase tracking-widest text-on-surface-variant font-medium">Description</span>
+<span class="text-xs uppercase tracking-widest text-on-surface-variant font-medium text-right">Amount</span>
+</div>
+<!-- Line Items -->
+<div class="flex justify-between items-center group cursor-pointer hover:bg-surface-container-highest/30 p-2 -mx-2 transition-colors">
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-on-surface">Labor - Technical Lead</span>
+<span class="text-[10px] text-on-surface-variant uppercase tracking-tighter">6.0 Hours @ ₦20,000/hr</span>
+</div>
+<span class="font-headline font-bold text-on-surface">₦120,000</span>
+</div>
+<div class="flex justify-between items-center group cursor-pointer hover:bg-surface-container-highest/30 p-2 -mx-2 transition-colors">
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-on-surface">Conduit Pipe G1 - 25mm</span>
+<span class="text-[10px] text-on-surface-variant uppercase tracking-tighter">12 Units detected</span>
+</div>
+<span class="font-headline font-bold text-on-surface">₦38,400</span>
+</div>
+<div class="flex justify-between items-center group cursor-pointer hover:bg-surface-container-highest/30 p-2 -mx-2 transition-colors">
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-on-surface">Service Charge &amp; Logistics</span>
+<span class="text-[10px] text-on-surface-variant uppercase tracking-tighter">Standard Flat Rate</span>
+</div>
+<span class="font-headline font-bold text-on-surface">₦15,000</span>
+</div>
+<!-- Total Section -->
+<div class="mt-8 pt-6 border-t-2 border-[#ff5c1a]/20 flex justify-between items-baseline">
+<span class="text-xs uppercase tracking-[0.2em] font-extrabold text-[#ff5c1a]">Grand Total</span>
+<div class="text-right">
+<p class="text-3xl font-headline font-black text-on-surface leading-none tracking-tighter">₦173,400</p>
+<p class="text-[10px] text-on-surface-variant mt-1">VAT Included (7.5%)</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Insights Bento -->
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-surface-container-low p-4 rounded-lg">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-[18px] text-tertiary-container">info</span>
+<span class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">Tax Memo</span>
+</div>
+<p class="text-xs text-on-surface leading-relaxed">Tax ID detected: TIN-992033481. Eligible for business expense deduction.</p>
+</div>
+<div class="bg-surface-container-low p-4 rounded-lg">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-[18px] text-[#ff5c1a]">warning</span>
+<span class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">Rate Check</span>
+</div>
+<p class="text-xs text-on-surface leading-relaxed">Labor rate is 8% higher than your last maintenance invoice.</p>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="space-y-4 pt-4">
+<button class="w-full h-16 bg-primary-container text-on-primary font-headline font-black uppercase tracking-widest rounded-sm flex items-center justify-center gap-3 primary-glow active:scale-[0.98] transition-transform">
+<span>Confirm &amp; Send Invoice</span>
+<span class="material-symbols-outlined">send</span>
+</button>
+<button class="w-full h-14 bg-transparent border border-outline-variant/30 text-on-surface-variant font-headline font-bold uppercase tracking-widest rounded-sm active:scale-[0.98] transition-transform hover:bg-surface-container-highest/20">
+                Retry Recognition
+            </button>
+</div>
+<!-- Footnote -->
+<p class="text-center text-[10px] text-on-surface-variant/40 uppercase tracking-tighter pb-12">
+            Invoice generated via AI Voice/Photo interpretation engine v2.4.0
+        </p>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 px-4 pb-safe bg-[#080808]/90 backdrop-blur-md border-t border-[#ff5c1a]/10">
+<div class="flex flex-col items-center justify-center text-[#e4beb3] opacity-60 hover:text-[#ff5c1a] transition-all active:scale-90 duration-150 ease-out">
+<span class="material-symbols-outlined">home</span>
+<span class="font-['Space_Grotesk'] text-[10px] uppercase font-bold tracking-widest">Home</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#ff5c1a] drop-shadow-[0_0_8px_rgba(255,92,26,0.4)] active:scale-90 transition-all duration-150 ease-out">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="font-['Space_Grotesk'] text-[10px] uppercase font-bold tracking-widest">Invoices</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#e4beb3] opacity-60 hover:text-[#ff5c1a] transition-all active:scale-90 duration-150 ease-out">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="font-['Space_Grotesk'] text-[10px] uppercase font-bold tracking-widest">Auto-Pilot</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#e4beb3] opacity-60 hover:text-[#ff5c1a] transition-all active:scale-90 duration-150 ease-out">
+<span class="material-symbols-outlined">person</span>
+<span class="font-['Space_Grotesk'] text-[10px] uppercase font-bold tracking-widest">Profile</span>
+</div>
+</nav>
+</body></html>

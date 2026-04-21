@@ -1,0 +1,17 @@
+{
+  "name": "TradesPay AI",
+  "short_name": "TradesPay",
+  "description": "Voice-to-Invoice AI for Contractors.",
+  "start_url": "/index.htm",
+  "display": "standalone",
+  "background_color": "#080808",
+  "theme_color": "#ff5c1a",
+  "icons": [
+    {
+      "src": "logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
