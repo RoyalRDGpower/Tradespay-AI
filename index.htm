@@ -1331,11 +1331,9 @@ window.addEventListener('scroll',()=>{
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js').then(reg => {
-      console.log('SW Registered', reg);
-    }).catch(err => {
-      console.log('SW Registration failed: ', err);
-    });
+    navigator.serviceWorker.register('/sw.js')
+      .then(reg => console.log('🚀 PWA Service Worker Active'))
+      .catch(err => console.log('❌ SW Registration failed:', err));
   });
 }
 </script>

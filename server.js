@@ -44,12 +44,17 @@ app.get('/api/webhooks/meta', (req, res) => {
 
 // ── DATA DELETION ENDPOINT (COMPLIANCE) ────────────────
 app.post('/api/meta/delete', (req, res) => {
-    // Meta sends a signed_request. For now, we return standard confirmation.
     console.log("🗑️ Meta Data Deletion Request Received");
     res.json({
         url: "https://tradespay.srdgintel.com/deletion-status",
-        confirmation_code: "TP-" + Date.now()
+        confirmation_code: "TP-DEL-" + Date.now()
     });
+});
+
+// ── DEAUTHORIZE ENDPOINT (COMPLIANCE) ──────────────────
+app.post('/api/meta/deauthorize', (req, res) => {
+    console.log("🔌 Meta App Deauthorized by User");
+    res.status(200).json({ status: "deauthorized", timestamp: new Date().toISOString() });
 });
 
 // ── SEND MESSAGES (OUTBOUND) ──────────────────────────
@@ -137,10 +142,15 @@ app.post('/api/webhooks/meta', async (req, res) => {
             console.log(`🤖 Processing from ${senderId}: "${messageText}"`);
 
             try {
-                // 1. Find the user who owns this connection (Global for now, but logged for history)
-                // In a multi-tenant app, we'd lookup by IG Page ID or WA Phone ID.
-                const { data: profile } = await supabase.from('user_profiles').select('id').limit(1).single();
+                // 1. Find the user who owns this connection
+                const { data: profile } = await supabase.from('user_profiles').select('*').limit(1).single();
                 const userId = profile?.id;
+
+                // PREMIUM CHECK: Only allow if plan is 'premium' (or for internal testing)
+                if (profile?.plan !== 'premium' && !process.env.TESTING_MODE) {
+                    console.log(`🚫 Auto-Pilot blocked: User ${userId} is on ${profile?.plan} plan.`);
+                    return res.sendStatus(200);
+                }
 
                 // 2. LOG INBOUND TO DB
                 if (userId) {
@@ -155,7 +165,13 @@ app.post('/api/webhooks/meta', async (req, res) => {
                 }
 
                 // 3. Trigger Auto-Pilot Logic (Force Groq/Auto-Pilot Engine)
-                const aiResult = await processWithAI(`Incoming Message: "${messageText}"`, null, process.env.AUTOPILOT_AI_ENGINE);
+                const businessSettings = {
+                    service: profile?.business_service || 'Contracting Services',
+                    pricing: profile?.pricing_list || 'Contact for quote',
+                    tone: profile?.ai_tone || 'professional'
+                };
+
+                const aiResult = await processWithAI(`Incoming Message: "${messageText}"`, null, process.env.AUTOPILOT_AI_ENGINE, businessSettings);
                 const parsed = JSON.parse(aiResult);
                 const finalReply = parsed.replyText || "I've received your message. How can I help you today?";
                 
@@ -212,13 +228,23 @@ const transporter = nodemailer.createTransport({
 
 // ── AI PROCESSING ENGINE ─────────────────────────────
 
-async function processWithAI(promptText, base64Image = null, engineOverride = null) {
+async function processWithAI(promptText, base64Image = null, engineOverride = null, businessSettings = null) {
     const selectedEngine = engineOverride || process.env.AI_ENGINE || 'gemini';
     console.log(`🤖 AI Engine Selected: ${selectedEngine} (Override: ${engineOverride || 'none'})`);
 
-    const systemPrompt = `You are "Tradespay Sales Assistant," an expert Sales Auto-Pilot for small businesses and contractors.
+    const bizService = businessSettings?.service || "Contracting Services";
+    const bizPricing = businessSettings?.pricing || "Contact for quote";
+    const bizTone = businessSettings?.tone || "professional";
+
+    const systemPrompt = `You are "Tradespay Sales Assistant," an expert Sales Auto-Pilot for ${bizService}.
     
-    GOAL: Act as a friendly, professional closer. Your job is to convert leads into sales and generate invoices automatically.
+    TONE: ${bizTone}. Be professional, concise, and helpful.
+    
+    KNOWLEDGE BASE:
+    - Service: ${bizService}
+    - Pricing: ${bizPricing}
+    
+    GOAL: Act as a friendly, professional closer. Your job is to convert leads into sales and generate invoices automatically based on the pricing provided.
     
     CRITICAL: You must extract EXACT data from the user input (Voice Transcript or Image).
     - Multipliers: "k" means thousands (e.g., 50k = 50,000), "m" means millions (e.g., 1m = 1,000,000).
@@ -533,6 +559,48 @@ app.post('/api/ai/photo-to-invoice', async (req, res) => {
     } catch (error) {
         console.error("Photo AI Error:", error);
         res.status(500).json({ error: "Failed to analyze photo." });
+    }
+});
+
+app.post('/api/ai/draft-reminder', async (req, res) => {
+    try {
+        const { invoiceId } = req.body;
+        const authHeader = req.headers.authorization;
+        const token = authHeader?.split(' ')[1];
+        if (!token) return res.status(401).json({ error: "Unauthorized" });
+
+        const { data: { user }, error: authError } = await supabase.auth.getUser(token);
+        if (authError || !user) return res.status(401).json({ error: "Invalid token" });
+
+        // 1. Get Invoice & Profile
+        const { data: inv } = await supabase.from('invoices').select('*').eq('id', invoiceId).single();
+        const { data: profile } = await supabase.from('user_profiles').select('*').eq('id', user.id).single();
+
+        if (!inv) return res.status(404).json({ error: "Invoice not found" });
+
+        // 2. Draft Email with AI
+        const promptText = `DRAFT PAYMENT REMINDER:
+        Client: ${inv.client_name}
+        Amount: ${inv.total}
+        Invoice #: ${inv.invoice_number}
+        Due Date: ${inv.due_date}
+        Business Name: ${profile?.business_service || 'Our Company'}
+        
+        Write a professional yet firm payment reminder email. 
+        Return JSON with "subject" and "body" (HTML).`;
+
+        let draftResult = await processWithAI(promptText, null, 'groq', {
+            service: profile?.business_service,
+            tone: 'professional'
+        });
+
+        draftResult = draftResult.replace(/```json/g, '').replace(/```/g, '').trim();
+        const draft = JSON.parse(draftResult);
+
+        res.json({ draft });
+    } catch (error) {
+        console.error("Draft AI Error:", error);
+        res.status(500).json({ error: "Failed to draft reminder." });
     }
 });
 

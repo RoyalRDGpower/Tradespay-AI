@@ -1,7 +1,9 @@
 const CACHE_NAME = 'tradespay-v2';
 const ASSETS = [
     '/',
-    '/index.html',
+    '/index.htm',
+    '/tradespay_app.html',
+    '/autopilot_code.html',
     '/logo.png',
     '/manifest.json'
 ];

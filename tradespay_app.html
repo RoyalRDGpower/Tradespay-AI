@@ -58,7 +58,6 @@
       --blur: blur(12px);
       --shd: 0 4px 20px rgba(0, 0, 0, 0.5);
     }
-
     html,
     body {
       height: 100%;
@@ -828,25 +827,22 @@
           <div style="color:var(--mutl);font-size:12px;margin-bottom:20px">Select a job type — AI analyzes and builds
             the invoice</div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
-            <button onclick="processPhoto('HVAC full system install, new ductwork and unit')" class="card"
+            <button onclick="document.getElementById('photo-input').click()" class="card"
+              style="border:2px dashed var(--orm);cursor:pointer;text-align:center;padding:18px 10px;background:var(--ord);grid-column:span 2">
+              <div style="font-size:36px;margin-bottom:6px">📸</div>
+              <div style="color:var(--or);font-size:14px;font-weight:800">CLICK TO SNAP OR UPLOAD PHOTO</div>
+              <input type="file" id="photo-input" hidden accept="image/*" onchange="handlePhotoSelect(this)"/>
+            </button>
+            <div style="grid-column:span 2; color:var(--mutl); font-size:10px; font-weight:700; letter-spacing:1px; margin-top:10px">OR USE AI TEMPLATES</div>
+            <button onclick="processPhoto(null, 'HVAC full system install, new ductwork and unit')" class="card"
               style="border:1px solid var(--g3);cursor:pointer;text-align:center;padding:18px 10px">
               <div style="font-size:36px;margin-bottom:6px">❄️</div>
               <div style="color:var(--wht);font-size:12px;font-weight:700">HVAC Install</div>
             </button>
-            <button onclick="processPhoto('200A electrical panel upgrade with new breakers')" class="card"
+            <button onclick="processPhoto(null, '200A electrical panel upgrade with new breakers')" class="card"
               style="border:1px solid var(--g3);cursor:pointer;text-align:center;padding:18px 10px">
               <div style="font-size:36px;margin-bottom:6px">⚡</div>
               <div style="color:var(--wht);font-size:12px;font-weight:700">Electrical</div>
-            </button>
-            <button onclick="processPhoto('Kitchen pipe leak repair, new shutoff valve')" class="card"
-              style="border:1px solid var(--g3);cursor:pointer;text-align:center;padding:18px 10px">
-              <div style="font-size:36px;margin-bottom:6px">🔧</div>
-              <div style="color:var(--wht);font-size:12px;font-weight:700">Plumbing</div>
-            </button>
-            <button onclick="processPhoto('Roof shingle replacement, flashing installed')" class="card"
-              style="border:1px solid var(--g3);cursor:pointer;text-align:center;padding:18px 10px">
-              <div style="font-size:36px;margin-bottom:6px">🏠</div>
-              <div style="color:var(--wht);font-size:12px;font-weight:700">Roofing</div>
             </button>
           </div>
         </div>
@@ -1167,6 +1163,21 @@
     </div>
 
   </div><!-- end #app -->
+
+  <!-- EMAIL DRAFT MODAL -->
+  <div id="email-modal" class="loading-overlay" style="display:none; padding:20px">
+    <div class="card glass" style="width:100%; max-width:380px; max-height:80vh; display:flex; flex-direction:column">
+      <div style="font-family:'Syne',sans-serif; font-size:16px; font-weight:800; color:var(--or); margin-bottom:12px">🤖 AI DRAFTED EMAIL</div>
+      <div class="scroll" style="background:var(--black); border:1px solid var(--g3); border-radius:8px; padding:12px; font-size:12px; line-height:1.6; margin-bottom:16px">
+        <div id="draft-subject" style="font-weight:700; border-bottom:1px solid var(--g3); padding-bottom:8px; margin-bottom:8px">Subject: ...</div>
+        <div id="draft-body">Loading AI draft...</div>
+      </div>
+      <div style="display:flex; gap:10px">
+        <button class="btn-primary" id="btn-send-draft" style="flex:2">✅ Approve & Send</button>
+        <button class="btn-ghost" onclick="document.getElementById('email-modal').style.display='none'" style="flex:1">Cancel</button>
+      </div>
+    </div>
+  </div>
 
   <script>
     // ── SUPABASE CONFIG ───────────────────────────
@@ -1517,14 +1528,24 @@
     }
 
     // ── PHOTO INVOICE ─────────────────────────────
-    async function processPhoto(jobDesc) {
+    function handlePhotoSelect(input) {
+      const file = input.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        processPhoto(e.target.result, "Job site analysis from photo");
+      };
+      reader.readAsDataURL(file);
+    }
+
+    async function processPhoto(base64Image, jobDesc) {
       document.getElementById('photo-idle').style.display = 'none';
       document.getElementById('photo-processing').style.display = 'block';
       try {
         const res = await fetch(`${API_URL}/api/ai/photo-to-invoice`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${jwtToken}` },
-          body: JSON.stringify({ description: jobDesc })
+          body: JSON.stringify({ imageBase64: base64Image, description: jobDesc })
         });
         const data = await res.json();
         photoData = data.invoice || data;
@@ -1729,17 +1750,75 @@
       const b = document.getElementById('bnav-ana'); if (b) b.innerHTML = navHTML('analytics');
     }
 
-    function aiRemind(id) {
-        showToast("🤖 AI is sending a professional reminder...");
-        setTimeout(() => showToast("✅ Reminder sent to client!"), 1500);
+    async function aiRemind(invoiceId) {
+        showLoading("AI is drafting a professional reminder...");
+        try {
+            const res = await fetch(`${API_URL}/api/ai/draft-reminder`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${jwtToken}` },
+                body: JSON.stringify({ invoiceId })
+            });
+            const { draft } = await res.json();
+            
+            hideLoading();
+            const modal = document.getElementById('email-modal');
+            document.getElementById('draft-subject').textContent = "Subject: " + draft.subject;
+            document.getElementById('draft-body').innerHTML = draft.body;
+            modal.style.display = 'flex';
+            
+            document.getElementById('btn-send-draft').onclick = () => sendFinalReminder(invoiceId, draft);
+        } catch (e) {
+            hideLoading();
+            showToast("❌ Failed to draft reminder");
+        }
+    }
+
+    async function sendFinalReminder(invoiceId, draft) {
+        document.getElementById('email-modal').style.display = 'none';
+        showLoading("Sending email...");
+        try {
+            // Fetch invoice to get client email (mocking or getting from profile)
+            const inv = invoices.find(i => i.id === invoiceId);
+            const { data: profile } = await sb.from('user_profiles').select('email').eq('id', user.id).single();
+            
+            const res = await fetch(`${API_URL}/api/email/remind`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${jwtToken}` },
+                body: JSON.stringify({ 
+                    toEmail: inv.clientEmail || profile.email, 
+                    clientName: inv.clientName || inv.client_name,
+                    amountDue: fmt(inv.total),
+                    invoiceNumber: inv.invoice_number,
+                    dueDate: inv.due_date
+                })
+            });
+            
+            hideLoading();
+            if (res.ok) showToast("✅ Reminder sent successfully!");
+            else showToast("❌ Failed to send email");
+        } catch (e) {
+            hideLoading();
+            showToast("❌ SMTP Error");
+        }
     }
 
     // ── NEW: AUTO-PILOT CONFIG ───────────────────
-    function initAPConfig() {
-        // Load settings from localStorage or mock
-        document.getElementById('ap-service').value = "HVAC & Electrical Services";
-        document.getElementById('ap-pricing').value = "Standard Callout: ₦50,000\nFull Install: ₦150k - 500k";
-        setTone('prof');
+    async function initAPConfig() {
+        if (!user) return go('s-login');
+        
+        // Premium Restriction Check
+        const { data: profile } = await sb.from('user_profiles').select('*').eq('id', user.id).single();
+        if (profile?.plan !== 'premium' && user.email !== 'srdgintel@gmail.com') { // Whitelist for testing
+            showToast("💎 Auto-Pilot is a Premium Feature. Please upgrade!");
+            go('s-ana');
+            return;
+        }
+
+        if (profile) {
+            document.getElementById('ap-service').value = profile.business_service || '';
+            document.getElementById('ap-pricing').value = profile.pricing_list || '';
+            setTone(profile.ai_tone || 'professional');
+        }
     }
 
     let currentTone = 'prof';
@@ -1752,13 +1831,27 @@
         });
     }
 
-    function deployTraining() {
-        showLoading("Deploying AI changes...");
-        setTimeout(() => {
+    async function deployTraining() {
+        const service = document.getElementById('ap-service').value.trim();
+        const pricing = document.getElementById('ap-pricing').value.trim();
+        
+        showLoading("Training AI on your business data...");
+        try {
+            const { error } = await sb.from('user_profiles').update({
+                business_service: service,
+                pricing_list: pricing,
+                ai_tone: currentTone
+            }).eq('id', user.id);
+            
+            if (error) throw error;
+            
             hideLoading();
             showToast("🚀 AI trained successfully!");
             go('s-messages');
-        }, 1500);
+        } catch (e) {
+            hideLoading();
+            showToast("❌ Failed to train AI: " + e.message);
+        }
     }
 
     let currentChat = null;
@@ -1824,6 +1917,13 @@
       if (el) el.style.display = 'none';
     }
   </script>
-</body>
-
-</html>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then(reg => console.log('🚀 PWA Service Worker Active'))
+          .catch(err => console.log('❌ SW Registration failed:', err));
+      });
+    }
+  </script>
+</body></html>

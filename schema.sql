@@ -10,6 +10,9 @@ CREATE TABLE IF NOT EXISTS public.user_profiles (
     instagram_handle VARCHAR(100),
     bank_details TEXT,
     ai_sales_enabled BOOLEAN DEFAULT FALSE,
+    business_service TEXT,
+    pricing_list TEXT,
+    ai_tone VARCHAR(50) DEFAULT 'professional',
     flutterwave_ref VARCHAR(255),
     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );

@@ -250,4 +250,23 @@ Inspection: $150 flat" rows="4"></textarea>
 <span class="font-['Space_Grotesk'] text-[10px] uppercase font-bold tracking-widest mt-1">Profile</span>
 </a>
 </nav>
+    <!-- WELCOME MODAL -->
+    <div id="welcome-modal" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm transition-opacity duration-300">
+        <div class="bg-surface-container-low border border-primary-container p-8 rounded-lg max-w-sm text-center shadow-[0_0_50px_rgba(255,92,26,0.2)]">
+            <div class="w-20 h-20 bg-primary-container/10 rounded-full flex items-center justify-center mx-auto mb-6 text-primary-container">
+                <span class="material-symbols-outlined text-5xl">smart_toy</span>
+            </div>
+            <h2 class="text-2xl font-headline font-bold text-on-surface mb-3">Welcome to Tradespay AI!</h2>
+            <p class="text-on-surface-variant text-sm leading-relaxed mb-8">Your Auto-Pilot is ready to close sales. Never miss a DM or lead again.</p>
+            <button onclick="document.getElementById('welcome-modal').remove()" class="w-full bg-primary-container py-3 rounded-sm text-on-primary font-headline font-bold uppercase tracking-widest text-xs">
+                Let's Get Started
+            </button>
+        </div>
+    </div>
+
+    <script>
+        window.onload = function() {
+            console.log("🤖 Auto-Pilot UI Initialized");
+        };
+    </script>
 </body></html>
