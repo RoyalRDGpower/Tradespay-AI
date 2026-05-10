@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS public.invoices (
     user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
     invoice_number VARCHAR(50) NOT NULL,
     client_name VARCHAR(255) NOT NULL,
+    client_email VARCHAR(255),
     job_description TEXT,
     subtotal DECIMAL(12,2) DEFAULT 0.00,
     tax_rate DECIMAL(5,4) DEFAULT 0.0750,
@@ -107,5 +108,13 @@ BEGIN
         CREATE TRIGGER on_auth_user_created
         AFTER INSERT ON auth.users
         FOR EACH ROW EXECUTE PROCEDURE public.handle_new_user();
+    END IF;
+END $$;
+
+-- Add client_email to invoices if it doesn't exist
+DO $$
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='invoices' AND column_name='client_email') THEN
+        ALTER TABLE public.invoices ADD COLUMN client_email VARCHAR(255);
     END IF;
 END $$;
