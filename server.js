@@ -744,6 +744,10 @@ app.post('/api/meta/reply', async (req, res) => {
 });
 
 // START SERVER
-app.listen(port, () => {
-    console.log(`✅ Server running on http://localhost:${port} [AI: ${AI_ENGINE}]`);
-});
+if (require.main === module) {
+    app.listen(port, () => {
+        console.log(`✅ Server running on http://localhost:${port} [AI: ${AI_ENGINE}]`);
+    });
+}
+
+module.exports = { app, sendMetaMessage };
