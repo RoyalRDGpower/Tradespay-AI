@@ -365,13 +365,25 @@ app.post('/api/auth/register', async (req, res) => {
     try {
         const { email, password, businessName, phone } = req.body;
         
+        // Validation layer for password strength
+        if (!password || password.length < 8 || !/\d/.test(password) || !/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+            return res.status(400).json({ error: "Password must be at least 8 characters long, and include at least one number and one special character." });
+        }
+
         // 1. Create user in Supabase Auth
         const { data: authData, error: authError } = await supabase.auth.signUp({
             email,
             password,
         });
 
-        if (authError) throw authError;
+        if (authError) {
+            // Log real error for internal analytics, but obscure the response for enumeration protection
+            console.error("Register Internal Error:", authError.message);
+            // Even if the user already exists, we return a generic success-like message
+            return res.json({
+                message: "If this email is not registered, a verification link has been sent."
+            });
+        }
         if (!authData.user) throw new Error("User creation failed.");
 
         // 2. Update user profile (SQL trigger handles initial insert)
@@ -392,8 +404,8 @@ app.post('/api/auth/register', async (req, res) => {
             message: authData.session ? "Registration successful" : "Please check your email to confirm registration"
         });
     } catch (error) {
-        console.error("Register Error:", error);
-        res.status(400).json({ error: error.message });
+        console.error("Register Global Error:", error);
+        res.status(500).json({ error: "An internal error occurred. Please try again later." });
     }
 });
 
@@ -405,8 +417,14 @@ app.post('/api/auth/login', async (req, res) => {
             password,
         });
 
-        if (error) throw error;
-        if (!data.user) throw new Error("Login failed.");
+        if (error) {
+            console.error("Login Supabase Error:", error.message);
+            return res.status(401).json({ error: "Invalid email or password" });
+        }
+        if (!data.user) {
+            console.error("Login Error: No user returned despite no Supabase error");
+            return res.status(401).json({ error: "Invalid email or password" });
+        }
 
         // Fetch profile for accurate business data
         const { data: profile } = await supabase
@@ -424,8 +442,8 @@ app.post('/api/auth/login', async (req, res) => {
             } 
         });
     } catch (error) {
-        console.error("Login Error:", error);
-        res.status(400).json({ error: error.message });
+        console.error("Login Global Error:", error);
+        res.status(500).json({ error: "An internal error occurred. Please try again later." });
     }
 });
 
