@@ -1,25 +1,32 @@
 {
   "name": "tradespay-ai",
   "version": "1.0.0",
-  "description": "",
+  "description": "AI-powered invoicing platform for contractors - Voice to Invoice in 5 seconds",
   "main": "api/server.js",
+  "type": "commonjs",
   "scripts": {
     "start": "node api/server.js",
     "dev": "nodemon api/server.js",
+    "build": "npm install",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/RoyalRDGpower/Tradespay-Ai.git"
+    "url": "git+https://github.com/RoyalRDGpower/Tradespay-AI.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "invoicing",
+    "ai",
+    "contractors",
+    "voice-to-invoice",
+    "payment",
+    "sales-autopilot"
+  ],
+  "author": "RoyalRDGpower",
   "license": "ISC",
-  "type": "commonjs",
-  "bugs": {
-    "url": "https://github.com/RoyalRDGpower/Tradespay-Ai/issues"
+  "engines": {
+    "node": ">=20.0.0"
   },
-  "homepage": "https://github.com/RoyalRDGpower/Tradespay-Ai#readme",
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
     "@supabase/supabase-js": "^2.49.1",
@@ -30,5 +37,8 @@
     "nodemailer": "^8.0.4",
     "openai": "^6.33.0",
     "resend": "^6.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
   }
 }
