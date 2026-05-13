@@ -733,6 +733,7 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;color:var(--wht);overflow
 
 <input type="file" id="cameraInput" accept="image/*" capture="environment" style="display:none" onchange="handlePhotoBase64(event)">
 
+<script src="config.js"></script>
 <script>
 // Backend URL resolver
 const API = window.location.hostname.includes('localhost') || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:' 
@@ -1124,7 +1125,7 @@ async function processVoice(){
   document.getElementById('vi-text').style.display='none';
   document.getElementById('vi-proc').style.display='block';
   try{
-    const r=await fetch(API+'/api/ai/voice-to-invoice',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+(token||'testing')},body:JSON.stringify({transcript:txt})});
+    const r=await fetch(APP_CONFIG.API_URL,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+(token||'testing')},body:JSON.stringify({transcript:txt})});
     const d=await r.json();
     if(d.error) throw new Error(d.error);
     voiceData = d.invoice || d;
@@ -1175,7 +1176,7 @@ async function handlePhotoBase64(event) {
     reader.onload = async function() {
         const base64String = reader.result;
         try {
-            const res = await fetch(API+'/api/ai/photo-to-invoice', {
+            const res = await fetch(APP_CONFIG.API_URL, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + (token||'testing') },
                 body: JSON.stringify({ description: window.lastDesc, imageBase64: base64String })
