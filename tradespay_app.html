@@ -1141,6 +1141,7 @@
     </div>
   </div>
 
+  <script src="config.js"></script>
   <script>
     // ── SUPABASE CONFIG ───────────────────────────
     const SUPABASE_URL = 'https://kakynaaatzotkpyjsvit.supabase.co';
@@ -1449,7 +1450,7 @@
       document.getElementById('voice-transcript').style.display = 'none';
       document.getElementById('voice-processing').style.display = 'block';
       try {
-        const res = await fetch(`${API_URL}/api/ai/voice-to-invoice`, {
+        const res = await fetch(APP_CONFIG.API_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${jwtToken}` },
           body: JSON.stringify({ transcript: txt })
@@ -1504,7 +1505,7 @@
       document.getElementById('photo-idle').style.display = 'none';
       document.getElementById('photo-processing').style.display = 'block';
       try {
-        const res = await fetch(`${API_URL}/api/ai/photo-to-invoice`, {
+        const res = await fetch(APP_CONFIG.API_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${jwtToken}` },
           body: JSON.stringify({ imageBase64: base64Image, description: jobDesc })
