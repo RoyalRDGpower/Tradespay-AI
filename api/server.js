@@ -5,7 +5,7 @@ const OpenAI = require('openai');
 const nodemailer = require('nodemailer');
 const path = require('path');
 require('dotenv').config();
-const supabase = require('./supabaseClient');
+const { supabase } = require('./supabaseClient');
 
 
 const app = express();
@@ -762,6 +762,10 @@ app.post('/api/meta/reply', async (req, res) => {
 });
 
 // START SERVER
-app.listen(port, () => {
-    console.log(`✅ Server running on http://localhost:${port} [AI: ${AI_ENGINE}]`);
-});
+if (require.main === module) {
+    app.listen(port, () => {
+        console.log(`✅ Server running on http://localhost:${port} [AI: ${AI_ENGINE}]`);
+    });
+}
+
+module.exports = app;
