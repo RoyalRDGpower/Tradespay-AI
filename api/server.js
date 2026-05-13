@@ -18,7 +18,7 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
 app.use(express.json({ limit: '10mb' }));
-app.use(express.static(path.join(__dirname), { index: 'tradespay-app.html' }));
+app.use(express.static(path.join(__dirname), { index: 'tradespay_app.html' }));
 
 // ── HEALTH CHECK ─────────────────────────────────────
 app.get('/api/health', (req, res) => {

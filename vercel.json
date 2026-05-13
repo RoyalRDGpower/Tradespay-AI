@@ -3,6 +3,6 @@
   "cleanUrls": true,
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/server.js" },
-    { "source": "/(.*)", "destination": "/index.htm" }
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
