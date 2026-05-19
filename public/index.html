@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TradesPay AI - Command Center</title>
+    <style>
+        body { font-family: 'Syne', system-ui, sans-serif; background: #0a0a0a; color: #f4f4f5; text-align: center; padding: 40px; margin: 0; }
+        .container { max-width: 600px; margin: 0 auto; background: #18181b; padding: 40px; border-radius: 12px; border: 1px solid #27272a; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        .logo { max-width: 200px; margin-bottom: 20px; }
+        h2 { color: #ff5c1a; font-family: 'Bebas Neue', Impact, sans-serif; letter-spacing: 1.5px; font-size: 32px; margin-top: 0; }
+        p { color: #a1a1aa; font-size: 16px; margin-bottom: 30px; line-height: 1.5; }
+        
+        .mic-btn { 
+            background: #ff5c1a; color: white; border: none; padding: 18px 36px; font-size: 18px; 
+            border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; transition: 0.3s;
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+        .mic-btn:hover { background: #e04d14; }
+        .mic-btn.listening { background: #dc2626; animation: pulse 1.5s infinite; }
+        
+        #status-log { margin-top: 25px; padding: 15px; background: #27272a; border-radius: 6px; font-size: 14px; border-left: 4px solid #ff5c1a; text-align: left;}
+        pre { background: #000; padding: 20px; border-radius: 8px; text-align: left; overflow-x: auto; color: #4ade80; border: 1px solid #3f3f46; font-size: 14px;}
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="https://i.postimg.cc/9FhB2btn/Trades-Pay-AI-logo-png.jpg" alt="TradesPay AI" class="logo">
+        <h2>Voice-to-Invoice AI</h2>
+        <p>Skip the typing. Tap the mic and describe the job, client name, and prices. The AI will extract it instantly.</p>
+        
+        <button id="start-voice-btn" class="mic-btn">🎙️ Tap to Speak</button>
+        
+        <div id="status-log">System Ready. Waiting for voice input...</div>
+
+        <div id="result-container" style="display: none; margin-top: 30px;">
+            <h3 style="color: #ff5c1a; text-align: left; margin-bottom: 10px;">⚡ AI Extracted JSON:</h3>
+            <pre id="json-output"></pre>
+        </div>
+    </div>
+
+    <script src="/app.js"></script>
+</body>
+</html>
